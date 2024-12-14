@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import java.lang.String?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+    <children>
+        <!-- Sidebar -->
+        <Pane prefHeight="600.0" prefWidth="149.0" style="-fx-background-color: #696969;">
+            <children>
+                <ImageView fitHeight="168.0" fitWidth="181.0" layoutX="-11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../_Black%20And%20Yellow%20Modern%20Event%20Producer%20Initial%20Logo.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="btnAddClient" layoutX="11.0" layoutY="200.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Add Client"/>
+                <Button fx:id="btnSchedule" layoutX="11.0" layoutY="250.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Schedule"/>
+            </children>
+        </Pane>
+
+        <!-- Table Section for Clients -->
+        <TableView fx:id="clientTable" layoutX="160.0" layoutY="20.0" prefHeight="260.0" prefWidth="620.0">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Nama" prefWidth="150.0"/>
+                <TableColumn fx:id="contactColumn" text="Kontak" prefWidth="150.0"/>
+                <TableColumn fx:id="eventColumn" text="Event" prefWidth="300.0"/>
+            </columns>
+        </TableView>
+
+        <!-- Table Section for Schedule -->
+        <TableView fx:id="scheduleTable" layoutX="160.0" layoutY="300.0" prefHeight="260.0" prefWidth="620.0">
+            <columns>
+                <TableColumn fx:id="dateColumn" text="Tanggal" prefWidth="150.0"/>
+                <TableColumn fx:id="locationColumn" text="Lokasi" prefWidth="200.0"/>
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0"/>
+            </columns>
+        </TableView>
+
+        <!-- Button to Add Event -->
+        <Button fx:id="btnAddEvent" layoutX="660.0" layoutY="570.0" mnemonicParsing="false" text="Tambah Event"/>
+
+        <!-- Popup Form for Adding Event -->
+        <AnchorPane fx:id="addEventPopup" layoutX="200.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+            <children>
+                <TextField fx:id="eventNameField" layoutX="20.0" layoutY="20.0" prefWidth="360.0" promptText="Nama Event"/>
+                <TextArea fx:id="eventDescriptionField" layoutX="20.0" layoutY="60.0" prefWidth="360.0" prefHeight="100.0" promptText="Deskripsi Event"/>
+                <ComboBox fx:id="eventCategoryComboBox" layoutX="20.0" layoutY="180.0" prefWidth="360.0" promptText="Pilih Kategori">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Besar"/>
+                            <String fx:value="Sedang"/>
+                            <String fx:value="Kecil"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <DatePicker fx:id="eventDatePicker" layoutX="20.0" layoutY="220.0" prefWidth="360.0"/>
+                <TextField fx:id="eventTimeField" layoutX="20.0" layoutY="260.0" prefWidth="360.0" promptText="Waktu Event (HH:mm)"/>
+                <Button fx:id="btnSaveEvent" layoutX="140.0" layoutY="300.0" text="Simpan"/>
+                <Button fx:id="btnCancelEvent" layoutX="220.0" layoutY="300.0" text="Batal"/>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
