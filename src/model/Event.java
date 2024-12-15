@@ -1,70 +1,39 @@
 package model;
 
-import java.time.LocalDate;
-import java.lang.*;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Event {
+    private final SimpleStringProperty date;
+    private final SimpleStringProperty location;
+    private final SimpleStringProperty status;
 
-    private String name;
-    private String description;
-    private String category;
-    private LocalDate date;
-    private String location; // Tambahkan lokasi
-
-    public Event(String name, String description, String category, LocalDate date, String location) {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.date = date;
-        this.location = location;
+    public Event(String name, String type, String date, String location, String status) {
+        this.date = new SimpleStringProperty(date);
+        this.location = new SimpleStringProperty(location);
+        this.status = new SimpleStringProperty(status);
     }
 
-    public Event(String name, String type, String date, String location) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getDate() {
+        return date.get();
     }
 
-    // Getter and Setter methods
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public LocalDate getDate() {
+    public SimpleStringProperty dateProperty() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public String getLocation() {
+        return location.get();
     }
 
-    public String getLocation() {
+    public SimpleStringProperty locationProperty() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getStatus() {
+        return status.get();
     }
 
-    @Override
-    public String toString() {
-        return "Event{name='" + name + "', description='" + description + "', category='" + category + "', date=" + date + ", location='" + location + "'}";
+    public SimpleStringProperty statusProperty() {
+        return status;
     }
 }

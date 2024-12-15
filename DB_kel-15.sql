@@ -14,8 +14,7 @@ CREATE TABLE USER (
 -- Tabel Events
 CREATE TABLE EVENTS (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    NAME VARCHAR(100) NOT NULL, -- Nama event
-    TYPE VARCHAR(50) NOT NULL,
+    NAME VARCHAR(100) NOT NULL,
     description TEXT, -- Deskripsi tambahan
     category VARCHAR(50), -- Kategori event
     DATE DATE NOT NULL,

@@ -65,7 +65,7 @@
                     </items>
                 </ComboBox>
                 <DatePicker fx:id="eventDatePicker" layoutX="20.0" layoutY="220.0" prefWidth="360.0"/>
-                <TextField fx:id="eventTimeField" layoutX="20.0" layoutY="260.0" prefWidth="360.0" promptText="Waktu Event (HH:mm)"/>
+                <TextField fx:id="eventLocationField" layoutX="20.0" layoutY="260.0" prefWidth="360.0" promptText="Lokasi"/>
                 <Button fx:id="btnSaveEvent" layoutX="140.0" layoutY="300.0" text="Simpan"/>
                 <Button fx:id="btnCancelEvent" layoutX="220.0" layoutY="300.0" text="Batal"/>
             </children>

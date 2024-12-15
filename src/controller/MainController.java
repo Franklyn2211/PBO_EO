@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Client;
 
 public class MainController {
 
@@ -27,17 +28,30 @@ public class MainController {
     @FXML private Button btnAddEvent;
 
     @FXML
-    private TableView<Event> eventTable;
+    private TableView<Client> clientTable;
 
     @FXML
-    private TableColumn<Event, String> nameColumn;
-    
+    private TableColumn<Client, String> nameColumn;
+
+    @FXML
+    private TableColumn<Client, String> contactColumn;
+
+    @FXML
+    private TableColumn<Client, String> eventColumn;
+
+    @FXML
+    private TableView<Event> scheduleTable;
+
     @FXML
     private TableColumn<Event, String> dateColumn;
 
     @FXML
     private TableColumn<Event, String> locationColumn;
 
+    @FXML
+    private TableColumn<Event, String> statusColumn;
+
+    private ObservableList<Client> clientList = FXCollections.observableArrayList();
     private ObservableList<Event> eventList = FXCollections.observableArrayList();
 
     public MainController() {
@@ -46,13 +60,22 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        // Bind TableColumns to Event properties
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        contactColumn.setCellValueFactory(cellData -> cellData.getValue().contactProperty());
+        eventColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
 
-        // Load data from database
-        loadEventData();
+
+        // Load data into clientTable
+        loadClientData();
+
+        // Set listener for clientTable
+        clientTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                loadEventDetails(newValue.getEventId());
+            }
+        });
         
         // Initialize combo box
         ObservableList<String> categories = FXCollections.observableArrayList("Besar", "Sedang", "Kecil");
@@ -80,30 +103,63 @@ public class MainController {
         }
     }
     
-    private void loadEventData() {
-        eventList.clear();
+    private void loadClientData() {
+        clientList.clear();
         try (Connection connection = DatabaseConnection.getDBConnection();
              Statement statement = connection.createStatement()) {
 
-            String query = "SELECT name, type, date, location FROM events";
+            String query = """
+                    SELECT clients.id AS client_id, clients.name AS client_name, clients.contact, events.id AS event_id, events.name AS event_name
+                    FROM clients
+                    LEFT JOIN events ON clients.event_id = events.id
+                    """;
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                String date = resultSet.getString("date");
-                String location = resultSet.getString("location");
+                int clientId = resultSet.getInt("client_id");
+                String clientName = resultSet.getString("client_name");
+                String contact = resultSet.getString("contact");
+                int eventId = resultSet.getInt("event_id");
+                String eventName = resultSet.getString("event_name");
 
-                // Add data to ObservableList
-                eventList.add(new Event(name, date, location));
+                clientList.add(new Client(clientId, clientName, contact, eventId, eventName));
             }
 
         } catch (SQLException e) {
-            System.out.println("Error loading event data: " + e.getMessage());
+            System.out.println("Error loading client data: " + e.getMessage());
         }
 
-        // Bind data to TableView
-        eventTable.setItems(eventList);
+        clientTable.setItems(clientList);
     }
+    
+    private void loadEventDetails(int eventId) {
+    eventList.clear();
+    try (Connection connection = DatabaseConnection.getDBConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement("""
+                SELECT events.name AS event_name, events.date, events.location
+                FROM events
+                LEFT JOIN schedules ON events.id = schedules.event_id
+                WHERE events.id = ?
+         """)) {
+        preparedStatement.setInt(1, eventId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            String name = resultSet.getString("event_name");
+            String date = resultSet.getString("date");
+            String location = resultSet.getString("location");
+
+            eventList.add(new Event(name, null, date, location, null)); // Abaikan status
+        }
+    } catch (SQLException e) {
+        System.out.println("Error loading event details: " + e.getMessage());
+    }
+
+    scheduleTable.setItems(eventList);
+}
+
+
 
     @FXML
     private void showAddEventPopup() {
@@ -119,46 +175,39 @@ public class MainController {
         if (eventLocationField != null) eventLocationField.clear();
     }
 
-    @FXML
-    private void handleSaveEvent() {
-        if (!validateInputs()) {
-            return;
-        }
+@FXML
+private void handleSaveEvent() {
+    if (!validateInputs()) return;
 
-        try (Connection connection = DatabaseConnection.getDBConnection()) {
-            String insertQuery = "INSERT INTO events (name, type, description, category, date, location) VALUES (?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, eventNameField.getText());
-                preparedStatement.setString(2, "Custom"); // Set default type
-                preparedStatement.setString(3, eventDescriptionField.getText());
-                preparedStatement.setString(4, eventCategoryComboBox.getValue());
-                preparedStatement.setDate(5, java.sql.Date.valueOf(eventDatePicker.getValue()));
-                preparedStatement.setString(6, eventLocationField.getText());
+    try (Connection connection = DatabaseConnection.getDBConnection()) {
+        String insertQuery = """
+            INSERT INTO events (name, description, category, date, location)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            preparedStatement.setString(1, eventNameField.getText());
+            preparedStatement.setString(3, eventDescriptionField.getText());
+            preparedStatement.setString(4, eventCategoryComboBox.getValue());
+            preparedStatement.setDate(5, java.sql.Date.valueOf(eventDatePicker.getValue()));
+            preparedStatement.setString(6, eventLocationField.getText());
 
-                int rowsInserted = preparedStatement.executeUpdate();
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                showSuccessAlert("Event berhasil disimpan!");
 
-                if (rowsInserted > 0) {
-                    showSuccessAlert("Event berhasil disimpan ke database!");
-
-                    Event newEvent = new Event(
-                        eventNameField.getText(),
-                        eventDescriptionField.getText(),
-                        eventCategoryComboBox.getValue(),
-                        eventDatePicker.getValue(),
-                        eventLocationField.getText() // Lokasi
-                    );
-
-                    eventList.add(newEvent);
-                    eventTable.setItems(eventList);
-                }
+                // Muat ulang tabel dari database
+                loadClientData();
             }
-        } catch (SQLException exception) {
-            showErrorAlert("Terjadi kesalahan saat menyimpan ke database: " + exception.getMessage());
         }
-
-        clearForm();
-        addEventPopup.setVisible(false);
+    } catch (SQLException e) {
+        showErrorAlert("Terjadi kesalahan saat menyimpan data ke database: " + e.getMessage());
     }
+
+    clearForm();
+    addEventPopup.setVisible(false);
+}
+
+
 
     @FXML
     private void handleCancelEvent() {
