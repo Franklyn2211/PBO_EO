@@ -1,26 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author ASUS
- */
-public class ScheduleController implements Initializable {
+public class ScheduleController {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+    @FXML
+    private TableView<?> scheduleTable;
+
+    @FXML
+    private AnchorPane addSchedulePopup;
+
+    @FXML
+    private void initialize() {
+        // Initialize TableView, and any other setup
+    }
+
+    @FXML
+    private void showAddSchedulePopup() {
+        addSchedulePopup.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddSchedulePopup() {
+        addSchedulePopup.setVisible(false);
+    }
 }

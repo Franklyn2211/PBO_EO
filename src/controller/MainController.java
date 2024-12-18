@@ -18,12 +18,15 @@ import java.sql.SQLException;
 
 public class MainController {
 
-    @FXML
-    private Label totalUserLabel;
-    @FXML
-    private Label totalClientLabel;
-    @FXML
-    private Label totalEventLabel;
+   @FXML
+private Label totalUserLabel;
+
+@FXML
+private Label totalClientLabel;
+
+@FXML
+private Label totalEventLabel;
+
     @FXML
     private PieChart eventStatusChart;
     @FXML

@@ -26,14 +26,14 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Pane layoutY="-4.0" prefHeight="414.0" prefWidth="334.0" style="-fx-background-color: GREY;">
+      <Pane prefHeight="410.0" prefWidth="334.0" style="-fx-background-color: GREY;">
          <children>
             <ImageView fitHeight="253.0" fitWidth="266.0" layoutX="41.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../logo.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="23.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYTEM MANAGEMNT EVENT ORGANISATION" wrappingWidth="288.20458984375">
+            <Text fill="WHITE" layoutX="23.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM MANAGEMNT EVENT ORGANISATION" wrappingWidth="288.20458984375">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

@@ -22,7 +22,7 @@
         <Button layoutX="502.0" layoutY="323.0" onAction="#handleRegister" prefHeight="28.0" prefWidth="76.0" style="-fx-background-color: grey;" text="Register" />
       <Pane layoutX="-3.0" prefHeight="420.0" prefWidth="347.0" style="-fx-background-color: GREY;">
          <children>
-            <ImageView fitHeight="253.0" fitWidth="266.0" layoutX="47.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="253.0" fitWidth="266.0" layoutX="54.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../logo.png" />
                </image>

@@ -1,66 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ScheduleController">
-   <children>
-               <!-- Sidebar -->
-           <Pane prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #696969;">
-               <children>
-                   <!-- Logo -->
-                   <ImageView fitHeight="190.0" fitWidth="208.0" layoutX="-20.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
-                       <image>
-                           <Image url="@../Logo.png" />
-                       </image>
-                   </ImageView>
-   
-                   <!-- Sidebar Buttons -->
-                   <Button fx:id="btnDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
-                   <Button fx:id="btnClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Client" />
-                   <Button fx:id="btnEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
-                   <Button fx:id="btnSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />
-                   <Button fx:id="btnLogout" layoutX="15.0" layoutY="520.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Log Out" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-25.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-           </Pane>
-           <!-- Main Content -->
-        <AnchorPane layoutX="150.0" prefHeight="600.0" prefWidth="507.0">
-            <children>
-                <!-- Header -->
-                <Label layoutX="20.0" layoutY="20.0" prefHeight="56.0" prefWidth="197.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Schedule">
-               <font>
-                  <Font size="32.0" />
-               </font></Label>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.ScheduleController">
+    <!-- Sidebar -->
+    <Pane prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #696969;">
+        <children>
+            <!-- Logo -->
+            <ImageView fitHeight="190.0" fitWidth="208.0" layoutX="-20.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../Logo.png" />
+                </image>
+            </ImageView>
 
-                <!-- Add Client Button -->
-                <Button fx:id="btnAddClientTop" layoutX="343.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Schedule" />
+            <!-- Sidebar Buttons -->
+            <Button fx:id="btnDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
+            <Button fx:id="btnClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Client" />
+            <Button fx:id="btnEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
+            <Button fx:id="btnSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />
+            <Button fx:id="btnLogout" layoutX="15.0" layoutY="520.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Log Out" />
+        </children>
+    </Pane>
 
-                <!-- Events Table -->
-                <TableView fx:id="clientTable" layoutX="20.0" layoutY="106.0" prefHeight="442.0" prefWidth="463.0">
-                    <columns>
-                        <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Nama Event" />
-                        <TableColumn fx:id="dateColumn" prefWidth="161.0" text="Decoration Date" />
-                        <TableColumn fx:id="locationColumn" prefWidth="151.0" text="Status" />
-                    </columns>
-                </TableView>
+    <!-- Main Content -->
+    <AnchorPane layoutX="150.0" prefHeight="600.0" prefWidth="650.0">
+        <children>
+            <!-- Header -->
+            <Label layoutX="20.0" layoutY="20.0" prefHeight="56.0" prefWidth="197.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Schedule">
+                
+            </Label>
 
-                <!-- Add Client Popup -->
-                <AnchorPane fx:id="addClientPopup" layoutX="125.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
-                    <children>
-                        <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tambah Client" />
-                        <TextField fx:id="nameField" layoutX="20.0" layoutY="50.0" prefWidth="360.0" promptText="Nama Client" />
-                        <TextField fx:id="contactField" layoutX="20.0" layoutY="100.0" prefWidth="360.0" promptText="Kontak" />
-                        <TextField fx:id="addressField" layoutX="20.0" layoutY="150.0" prefWidth="360.0" promptText="Alamat" />
-                        <Button fx:id="btnSaveClient" layoutX="120.0" layoutY="300.0" text="Simpan" />
-                        <Button fx:id="btnCancelClient" layoutX="200.0" layoutY="300.0" text="Batal" />
-                    </children>
-                </AnchorPane>
-            </children>
-        </AnchorPane>
-   </children>
+            <!-- Add Schedule Button -->
+            <Button fx:id="btnAddScheduleTop" layoutX="500.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Schedule" />
+
+            <!-- Month Navigation -->
+            <HBox layoutX="20.0" layoutY="70.0" spacing="10" alignment="CENTER">
+                <!-- Previous Month Button -->
+                <Button fx:id="btnPreviousMonth" mnemonicParsing="false" prefWidth="40.0">
+    <text>
+        
+    </text>
+</Button>
+
+                <!-- Month Label -->
+                <Label fx:id="monthLabel" text="December 2024" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                <!-- Next Month Button -->
+                <Button fx:id="btnNextMonth" mnemonicParsing="false" text=">" prefWidth="40.0" />
+            </HBox>
+
+            <!-- Schedule Table -->
+            <ScrollPane fx:id="scheduleScrollPane" layoutX="20.0" layoutY="106.0" prefHeight="442.0" prefWidth="600.0">
+                <content>
+                    <TableView fx:id="scheduleTable" prefHeight="442.0" prefWidth="580.0">
+                        <columns>
+                            <!-- Dynamically created columns for each day of the month -->
+                        </columns>
+                        <items>
+                            <!-- Dynamically created rows for each hour -->
+                        </items>
+                    </TableView>
+                </content>
+            </ScrollPane>
+
+            <!-- Add Schedule Popup -->
+            <AnchorPane fx:id="addSchedulePopup" layoutX="125.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                <children>
+                    <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tambah Schedule" />
+                    <TextField fx:id="eventNameField" layoutX="20.0" layoutY="50.0" prefWidth="360.0" promptText="Nama Event" />
+                    <TextField fx:id="eventTimeField" layoutX="20.0" layoutY="100.0" prefWidth="360.0" promptText="Waktu Event (e.g. 10:00 AM)" />
+                    <Button fx:id="btnSaveSchedule" layoutX="120.0" layoutY="300.0" text="Simpan" />
+                    <Button fx:id="btnCancelSchedule" layoutX="200.0" layoutY="300.0" text="Batal" />
+                </children>
+            </AnchorPane>
+        </children>
+    </AnchorPane>
 </AnchorPane>

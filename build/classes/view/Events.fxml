@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1007.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
     <children>
         <!-- Sidebar -->
         <Pane prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #696969;">
@@ -40,8 +40,9 @@
                 <Button fx:id="btnAddClientTop" layoutX="678.0" layoutY="58.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Events" />
 
                 <!-- Events Table -->
-                <TableView fx:id="clientTable" layoutX="20.0" layoutY="108.0" prefHeight="442.0" prefWidth="812.0">
+                <TableView fx:id="clientTable" layoutX="20.0" layoutY="108.0" prefHeight="442.0" prefWidth="851.0">
                     <columns>
+                        <TableColumn fx:id="numberColumn" prefWidth="48.0" text="No." />
                         <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Nama Event" />
                         <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Deskripsi" />
                         <TableColumn fx:id="categoryColumn" prefWidth="100.0" text="Kategori" />
