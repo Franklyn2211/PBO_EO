@@ -31,6 +31,12 @@ private Button goToDashboard;
 private Button goToClient;
 
 @FXML
+private Button goToEvent;
+
+@FXML
+private Button goToSchedule;
+
+@FXML
 private Label totalClientLabel;
 
 @FXML
@@ -147,6 +153,48 @@ private Label totalEventLabel;
             stage.show();
         } catch (IOException e) {
             System.out.println("Error loading Dashboard view: " + e.getMessage());
+            e.printStackTrace();
+        }   
+    }
+    
+    public void goToEvent() {
+             try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Event.fxml"));
+            Parent clientView = loader.load();
+            
+            // Get the current stage
+            Stage stage = (Stage) goToEvent.getScene().getWindow();
+            
+            // Create a new scene with the client view
+            Scene scene = new Scene(clientView);
+            
+            // Set the new scene
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading Event view: " + e.getMessage());
+            e.printStackTrace();
+        }   
+    }
+    
+    public void goToSchedule() {
+             try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Schedule.fxml"));
+            Parent clientView = loader.load();
+            
+            // Get the current stage
+            Stage stage = (Stage) goToSchedule.getScene().getWindow();
+            
+            // Create a new scene with the client view
+            Scene scene = new Scene(clientView);
+            
+            // Set the new scene
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading Schedule view: " + e.getMessage());
             e.printStackTrace();
         }   
     }

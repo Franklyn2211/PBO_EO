@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventController">
     <children>
         <!-- Sidebar -->
         <Pane prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #696969;">
@@ -19,10 +19,10 @@
                 </ImageView>
 
                 <!-- Sidebar Buttons -->
-                <Button fx:id="goToDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
+                <Button fx:id="goToDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" onAction="#goToDashboard"  prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
                 <Button fx:id="goToClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" onAction="#goToClient" prefHeight="35.0" prefWidth="120.0" text="Client" />
-                <Button fx:id="goToEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
-                <Button fx:id="goToSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />
+                <Button fx:id="goToEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" onAction="#goToEvent"  prefHeight="35.0" prefWidth="120.0" text="Event" />
+                <Button fx:id="goToSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" onAction="#goToSchedule"  prefHeight="35.0" prefWidth="120.0" text="Schedule" />
             </children>
         </Pane>
 
@@ -36,7 +36,7 @@
                </font></Label>
 
                 <!-- Add Client Button -->
-                <Button fx:id="btnAddClientTop" layoutX="678.0" layoutY="58.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Events" />
+                <Button fx:id="btnAddEventTop" layoutX="678.0" layoutY="58.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Events" />
 
                 <!-- Events Table -->
                 <TableView fx:id="clientTable" layoutX="20.0" layoutY="108.0" prefHeight="442.0" prefWidth="851.0">

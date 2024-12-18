@@ -1,48 +1,102 @@
 package controller;
 
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.Event;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class ScheduleController {
-    
-    @FXML
-    private Button goToDashboard;
-    
+public class EventController {
+
     @FXML
     private Button goToClient;
-    
+    @FXML
+    private Button goToDashboard;
     @FXML
     private Button goToEvent;
-    
     @FXML
     private Button goToSchedule;
+    @FXML
+    private TableView<Event> clientTable;
+    @FXML
+    private TableColumn<Event, String> nameColumn;
+    @FXML
+    private TableColumn<Event, String> descriptionColumn;
+    @FXML
+    private TableColumn<Event, String> categoryColumn;
+    @FXML
+    private TableColumn<Event, String> dateColumn;
+    @FXML
+    private TableColumn<Event, String> locationColumn;
+    @FXML
+    private TableColumn<Event, String> clientNameColumn;
+
+    private ObservableList<Event> eventList = FXCollections.observableArrayList();
+    private Connection connection;
 
     @FXML
-    private TableView<?> scheduleTable;
+    public void initialize() {
+        
+        // Hubungkan kolom tabel dengan atribut model Event
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        clientNameColumn.setCellValueFactory(new PropertyValueFactory<>("clientName"));
 
-    @FXML
-    private AnchorPane addSchedulePopup;
-
-    @FXML
-    private void initialize() {
-        // Initialize TableView, and any other setup
+        // Muat data dari database
+        loadDataFromDatabase();
     }
 
-    @FXML
-    private void showAddSchedulePopup() {
-        addSchedulePopup.setVisible(true);
-    }
+    private void loadDataFromDatabase() {
+        try {
+            // Query untuk mendapatkan data event beserta nama client
+            String query = """
+                SELECT e.id, e.name, e.description, e.category, e.date, e.location, c.name AS client_name
+                FROM EVENTS e
+                JOIN clients c ON e.client_id = c.id;
+            """;
 
-    @FXML
-    private void hideAddSchedulePopup() {
-        addSchedulePopup.setVisible(false);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Tambahkan data ke ObservableList
+            while (resultSet.next()) {
+                Event event = new Event(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getString("category"),
+                        resultSet.getDate("date"),
+                        resultSet.getString("location"),
+                        resultSet.getString("client_name")
+                );
+                eventList.add(event);
+            }
+
+            // Tampilkan data di TableView
+            clientTable.setItems(eventList);
+
+            // Tutup koneksi
+            connection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public void goToClient() {
