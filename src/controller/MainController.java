@@ -96,4 +96,8 @@ private Label totalEventLabel;
             System.out.println("Error Loading PieChart: " + e.getMessage());
         }
     }
+    
+    public void goToClient() {
+    
+    }
 }
