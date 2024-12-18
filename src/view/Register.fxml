@@ -22,9 +22,9 @@
         <Button layoutX="502.0" layoutY="323.0" onAction="#handleRegister" prefHeight="28.0" prefWidth="76.0" style="-fx-background-color: grey;" text="Register" />
       <Pane layoutX="-3.0" prefHeight="420.0" prefWidth="347.0" style="-fx-background-color: GREY;">
          <children>
-            <ImageView fitHeight="253.0" fitWidth="266.0" layoutX="47.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="253.0" fitWidth="266.0" layoutX="54.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../_Black%20And%20Yellow%20Modern%20Event%20Producer%20Initial%20Logo.png" />
+                  <Image url="@../logo.png" />
                </image>
             </ImageView>
             <Text fill="WHITE" layoutX="29.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM MANAGEMNT EVENT ORGANISATION" wrappingWidth="288.20458984375">
@@ -42,7 +42,7 @@
       </Text>
       <ImageView fitHeight="111.0" fitWidth="151.0" layoutX="398.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../logo_orang-removebg-preview.png" />
+            <Image url="@../register.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="33.0" fitWidth="32.0" layoutX="369.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">

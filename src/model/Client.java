@@ -4,57 +4,40 @@
  */
 package model;
 
-/**
- *
- * @author Franklyn
- */
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Client {
-    private final SimpleIntegerProperty id;
-    private final SimpleStringProperty name;
-    private final SimpleStringProperty contact;
-    private final SimpleIntegerProperty eventId;
-    private final SimpleStringProperty eventName;
+    private String name;
+    private String contact;
+    private String address;
 
-    public Client(int id, String name, String contact, int eventId, String eventName) {
-        this.id = new SimpleIntegerProperty(id);
-        this.name = new SimpleStringProperty(name);
-        this.contact = new SimpleStringProperty(contact);
-        this.eventId = new SimpleIntegerProperty(eventId);
-        this.eventName = new SimpleStringProperty(eventName);
+    // Constructor
+    public Client(String name, String contact, String address) {
+        this.name = name;
+        this.contact = contact;
+        this.address = address;
     }
 
-    public int getId() {
-        return id.get();
-    }
-
+    // Getter dan Setter
     public String getName() {
-        return name.get();
-    }
-
-    public SimpleStringProperty nameProperty() {
         return name;
     }
 
-    public String getContact() {
-        return contact.get();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public SimpleStringProperty contactProperty() {
+    public String getContact() {
         return contact;
     }
 
-    public int getEventId() {
-        return eventId.get();
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
-    public String getEventName() {
-        return eventName.get();
+    public String getAddress() {
+        return address;
     }
 
-    public SimpleStringProperty eventNameProperty() {
-        return eventName;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

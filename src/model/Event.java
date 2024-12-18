@@ -1,39 +1,81 @@
 package model;
 
-import javafx.beans.property.SimpleStringProperty;
+import java.sql.Date;
 
 public class Event {
-    private final SimpleStringProperty date;
-    private final SimpleStringProperty location;
-    private final SimpleStringProperty status;
+    private int id;
+    private String name;
+    private String description;
+    private String category;
+    private Date date;
+    private String location;
+    private String clientName;
 
-    public Event(String name, String type, String date, String location, String status) {
-        this.date = new SimpleStringProperty(date);
-        this.location = new SimpleStringProperty(location);
-        this.status = new SimpleStringProperty(status);
+    // Constructor
+    public Event(int id, String name, String description, String category, Date date, String location, String clientName) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.date = date;
+        this.location = location;
+        this.clientName = clientName;
     }
 
-    public String getDate() {
-        return date.get();
+    // Getters and Setters
+    public int getId() {
+        return id;
     }
 
-    public SimpleStringProperty dateProperty() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public String getLocation() {
-        return location.get();
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public SimpleStringProperty locationProperty() {
+    public String getLocation() {
         return location;
     }
 
-    public String getStatus() {
-        return status.get();
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public SimpleStringProperty statusProperty() {
-        return status;
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 }

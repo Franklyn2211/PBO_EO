@@ -1,254 +1,134 @@
 package controller;
 
-import javafx.collections.*;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import model.Event;
+import javafx.scene.control.Label;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import util.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.Client;
 
 public class MainController {
 
-    @FXML private AnchorPane addEventPopup;
-    @FXML private TextField eventNameField;
-    @FXML private TextArea eventDescriptionField;
-    @FXML private ComboBox<String> eventCategoryComboBox;
-    @FXML private DatePicker eventDatePicker;
-    @FXML private TextField eventLocationField; // Ubah dari waktu menjadi lokasi
-    @FXML private Button btnSaveEvent;
-    @FXML private Button btnCancelEvent;
-    @FXML private Button btnAddEvent;
-
     @FXML
-    private TableView<Client> clientTable;
-
+    private Label totalUserLabel;
     @FXML
-    private TableColumn<Client, String> nameColumn;
-
+    private Label totalClientLabel;
     @FXML
-    private TableColumn<Client, String> contactColumn;
-
+    private Label totalEventLabel;
     @FXML
-    private TableColumn<Client, String> eventColumn;
-
+    private PieChart eventStatusChart;
     @FXML
-    private TableView<Event> scheduleTable;
-
+    private TableView<String> tableView;
     @FXML
-    private TableColumn<Event, String> dateColumn;
-
+    private TableColumn<String, String> nameColumn;
     @FXML
-    private TableColumn<Event, String> locationColumn;
+    private TextField searchField;
 
+    private Connection connection;
+
+    // Initialize method called by FXML Loader
     @FXML
-    private TableColumn<Event, String> statusColumn;
-
-    private ObservableList<Client> clientList = FXCollections.observableArrayList();
-    private ObservableList<Event> eventList = FXCollections.observableArrayList();
-
-    public MainController() {
-        // Empty constructor
+    public void initialize() {
+        connection = connectToDatabase();
+        loadTotalCounts();
+        loadEventStatusChart();
+        loadTableView();
     }
 
-    @FXML
-    private void initialize() {
-         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        contactColumn.setCellValueFactory(cellData -> cellData.getValue().contactProperty());
-        eventColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
-locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
+    // Connect to the database
+    private Connection connectToDatabase() {
+        try {
+            return DatabaseConnection.getDBConnection();
+        } catch (SQLException e) {
+            System.out.println("Database Connection Error: " + e.getMessage());
+            return null;
+        }
+    }
 
+    // Load total counts for User, Clients, and Events
+    private void loadTotalCounts() {
+        String totalUsersQuery = "SELECT COUNT(*) AS total FROM USER";
+        String totalClientsQuery = "SELECT COUNT(*) AS total FROM clients";
+        String totalEventsQuery = "SELECT COUNT(*) AS total FROM EVENTS";
 
-        // Load data into clientTable
-        loadClientData();
+        try {
+            PreparedStatement statement;
+            ResultSet resultSet;
 
-        // Set listener for clientTable
-        clientTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                loadEventDetails(newValue.getEventId());
+            // Total Users
+            statement = connection.prepareStatement(totalUsersQuery);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                totalUserLabel.setText(String.valueOf(resultSet.getInt("total")));
             }
-        });
-        
-        // Initialize combo box
-        ObservableList<String> categories = FXCollections.observableArrayList("Besar", "Sedang", "Kecil");
-        eventCategoryComboBox.setItems(categories);
-        eventCategoryComboBox.setPromptText("Pilih Kategori");
 
-        // Hide popup initially
-        if (addEventPopup != null) {
-            addEventPopup.setVisible(false);
-            addEventPopup.setStyle("-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);");
-            addEventPopup.setLayoutX(200);
-            addEventPopup.setLayoutY(100);
-        }
+            // Total Clients
+            statement = connection.prepareStatement(totalClientsQuery);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                totalClientLabel.setText(String.valueOf(resultSet.getInt("total")));
+            }
 
-        if (btnAddEvent != null) {
-            btnAddEvent.setOnAction(event -> showAddEventPopup());
-        }
-
-        if (btnSaveEvent != null) {
-            btnSaveEvent.setOnAction(event -> handleSaveEvent());
-        }
-
-        if (btnCancelEvent != null) {
-            btnCancelEvent.setOnAction(event -> handleCancelEvent());
-        }
-    }
-    
-    private void loadClientData() {
-        clientList.clear();
-        try (Connection connection = DatabaseConnection.getDBConnection();
-             Statement statement = connection.createStatement()) {
-
-            String query = """
-                    SELECT clients.id AS client_id, clients.name AS client_name, clients.contact, events.id AS event_id, events.name AS event_name
-                    FROM clients
-                    LEFT JOIN events ON clients.event_id = events.id
-                    """;
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                int clientId = resultSet.getInt("client_id");
-                String clientName = resultSet.getString("client_name");
-                String contact = resultSet.getString("contact");
-                int eventId = resultSet.getInt("event_id");
-                String eventName = resultSet.getString("event_name");
-
-                clientList.add(new Client(clientId, clientName, contact, eventId, eventName));
+            // Total Events
+            statement = connection.prepareStatement(totalEventsQuery);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                totalEventLabel.setText(String.valueOf(resultSet.getInt("total")));
             }
 
         } catch (SQLException e) {
-            System.out.println("Error loading client data: " + e.getMessage());
+            System.out.println("Error Loading Totals: " + e.getMessage());
         }
-
-        clientTable.setItems(clientList);
-    }
-    
-    private void loadEventDetails(int eventId) {
-    eventList.clear();
-    try (Connection connection = DatabaseConnection.getDBConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement("""
-                SELECT events.name AS event_name, events.date, events.location
-                FROM events
-                LEFT JOIN schedules ON events.id = schedules.event_id
-                WHERE events.id = ?
-         """)) {
-        preparedStatement.setInt(1, eventId);
-
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            String name = resultSet.getString("event_name");
-            String date = resultSet.getString("date");
-            String location = resultSet.getString("location");
-
-            eventList.add(new Event(name, null, date, location, null)); // Abaikan status
-        }
-    } catch (SQLException e) {
-        System.out.println("Error loading event details: " + e.getMessage());
     }
 
-    scheduleTable.setItems(eventList);
-}
+    // Load PieChart for event status
+    private void loadEventStatusChart() {
+        String eventStatusQuery = "SELECT status, COUNT(*) AS total FROM schedules GROUP BY status";
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
+        try {
+            PreparedStatement statement = connection.prepareStatement(eventStatusQuery);
+            ResultSet resultSet = statement.executeQuery();
 
-
-    @FXML
-    private void showAddEventPopup() {
-        clearForm();
-        addEventPopup.setVisible(true);
-    }
-
-    private void clearForm() {
-        if (eventNameField != null) eventNameField.clear();
-        if (eventDescriptionField != null) eventDescriptionField.clear();
-        if (eventCategoryComboBox != null) eventCategoryComboBox.getSelectionModel().clearSelection();
-        if (eventDatePicker != null) eventDatePicker.setValue(null);
-        if (eventLocationField != null) eventLocationField.clear();
-    }
-
-@FXML
-private void handleSaveEvent() {
-    if (!validateInputs()) return;
-
-    try (Connection connection = DatabaseConnection.getDBConnection()) {
-        String insertQuery = """
-            INSERT INTO events (name, description, category, date, location)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            preparedStatement.setString(1, eventNameField.getText());
-            preparedStatement.setString(3, eventDescriptionField.getText());
-            preparedStatement.setString(4, eventCategoryComboBox.getValue());
-            preparedStatement.setDate(5, java.sql.Date.valueOf(eventDatePicker.getValue()));
-            preparedStatement.setString(6, eventLocationField.getText());
-
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                showSuccessAlert("Event berhasil disimpan!");
-
-                // Muat ulang tabel dari database
-                loadClientData();
+            while (resultSet.next()) {
+                String status = resultSet.getString("status");
+                int total = resultSet.getInt("total");
+                pieChartData.add(new PieChart.Data(status, total));
             }
+
+            eventStatusChart.setData(pieChartData);
+
+        } catch (SQLException e) {
+            System.out.println("Error Loading PieChart: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        showErrorAlert("Terjadi kesalahan saat menyimpan data ke database: " + e.getMessage());
     }
 
-    clearForm();
-    addEventPopup.setVisible(false);
-}
+    // Load TableView with client names
+    private void loadTableView() {
+        String loadClientsQuery = "SELECT name FROM clients";
+        ObservableList<String> clientNames = FXCollections.observableArrayList();
 
+        try {
+            PreparedStatement statement = connection.prepareStatement(loadClientsQuery);
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                clientNames.add(resultSet.getString("name"));
+            }
 
-    @FXML
-    private void handleCancelEvent() {
-        clearForm();
-        addEventPopup.setVisible(false);
-    }
+            tableView.setItems(clientNames);
 
-    private boolean validateInputs() {
-        StringBuilder errors = new StringBuilder();
-
-        if (isNullOrEmpty(eventNameField.getText())) errors.append("- Nama event harus diisi\n");
-        if (isNullOrEmpty(eventDescriptionField.getText())) errors.append("- Deskripsi event harus diisi\n");
-        if (eventCategoryComboBox.getValue() == null) errors.append("- Kategori harus dipilih\n");
-        if (eventDatePicker.getValue() == null) errors.append("- Tanggal harus dipilih\n");
-        if (isNullOrEmpty(eventLocationField.getText())) errors.append("- Lokasi harus diisi\n");
-
-        if (errors.length() > 0) {
-            showErrorAlert("Mohon perbaiki kesalahan berikut:\n" + errors);
-            return false;
+        } catch (SQLException e) {
+            System.out.println("Error Loading TableView: " + e.getMessage());
         }
-
-        return true;
-    }
-
-    private boolean isNullOrEmpty(String str) {
-        return str == null || str.trim().isEmpty();
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showSuccessAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sukses");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
