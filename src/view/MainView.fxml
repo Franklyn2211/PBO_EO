@@ -1,75 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.chart.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.chart.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
-   <children>
-   
-       <!-- Sidebar -->
-       <Pane prefHeight="600.0" prefWidth="149.0" style="-fx-background-color: #696969;">
-           <children>
-               <ImageView fitHeight="168.0" fitWidth="181.0" layoutX="-8.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
-                   <image>
-                       <Image url="@../_Black%20And%20Yellow%20Modern%20Event%20Producer%20Initial%20Logo.png" />
-                   </image>
-               </ImageView>
-               <Button fx:id="btnAddClient" layoutX="11.0" layoutY="205.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Client" />
-               <Button fx:id="btnSchedule" layoutX="11.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Schedule" />
-            <Button fx:id="btnAddClient1" layoutX="11.0" layoutY="257.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Event" />
-            <Button fx:id="btnSchedule1" layoutX="14.0" layoutY="549.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" text="Log Out" />
-            <Button fx:id="btnAddClient2" layoutX="11.0" layoutY="156.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Dashboard" />
-           </children>
-       </Pane>
-   
-       <!-- Popup Form Tambah Client -->
-       <AnchorPane fx:id="addClientPopup" layoutX="200.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
-           <children>
-               <TextField fx:id="nameField" layoutX="20.0" layoutY="20.0" prefWidth="360.0" promptText="Nama Client" />
-               <TextField fx:id="contactField" layoutX="20.0" layoutY="60.0" prefWidth="360.0" promptText="Kontak" />
-               <TextField fx:id="addressField" layoutX="20.0" layoutY="100.0" prefWidth="360.0" promptText="Alamat" />
-               <Button fx:id="btnSaveClient" layoutX="140.0" layoutY="300.0" text="Simpan" />
-               <Button fx:id="btnCancelClient" layoutX="220.0" layoutY="300.0" text="Batal" />
-           </children>
-       </AnchorPane>
-      <PieChart layoutX="265.0" layoutY="257.0" prefHeight="275.0" prefWidth="400.0" title="Persentase Events Selesai dan Belum Selesai" />
-      <TitledPane animated="false" layoutX="163.0" layoutY="87.0" text="Total Client">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="248.0" />
-        </content>
-      </TitledPane>
-      <TitledPane animated="false" layoutX="475.0" layoutY="87.0" text="Total Event">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="248.0" />
-         </content>
-      </TitledPane>
-      <Text layoutX="163.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="138.2900390625">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Label layoutX="658.0" layoutY="23.0" text="Label" />
-   </children>
-   <children>
-      <VBox layoutX="20" layoutY="20" spacing="10" />
-            <TextField fx:id="searchField" layoutX="14.0" layoutY="27.0" prefHeight="18.0" prefWidth="495.0" promptText="Cari Data..." />
-            <TableView fx:id="tableView" layoutX="350.0" layoutY="161.0" prefWidth="300">
-                <columns>
-                    <TableColumn fx:id="nameColumn" prefWidth="295.0" text="Nama" />
-                </columns>
-            </TableView>
-   </children>
+    <children>
+        <!-- Sidebar -->
+        <Pane prefHeight="600.0" prefWidth="149.0" style="-fx-background-color: #696969;">
+            <children>
+                <ImageView fitHeight="168.0" fitWidth="181.0" layoutX="-8.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../logo.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="btnAddClient2" layoutX="11.0" layoutY="156.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Dashboard" />
+                <Button fx:id="btnAddClient" layoutX="11.0" layoutY="205.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Client" />
+                <Button fx:id="btnAddClient1" layoutX="11.0" layoutY="257.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Event" />
+                <Button fx:id="btnSchedule" layoutX="11.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Schedule" />
+                <Button fx:id="btnSchedule1" layoutX="14.0" layoutY="549.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" text="Log Out" />
+            </children>
+        </Pane>
 
+        <!-- Dashboard Title -->
+        <Text layoutX="163.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="138.2900390625">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Text>
+
+        <!-- Total Event TitledPane -->
+        <TitledPane animated="false" layoutX="588.0" layoutY="109.0" text="Total Event">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="152.0">
+                    <children>
+                    <Label fx:id="totalEventLabel" layoutX="20.0" layoutY="20.0" text="0" />
+                </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+
+        <!-- PieChart -->
+        <PieChart fx:id="eventStatusChart" layoutX="262.0" layoutY="304.0" prefHeight="228.0" prefWidth="403.0" title="Persentase Events Selesai dan Belum Selesai" />
+
+                    <!-- Total Client TitledPane -->
+        <TitledPane animated="false" layoutX="386.0" layoutY="109.0" text="Total Client">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="153.0" >
+                <children>
+                    <Label fx:id="totalClientLabel" layoutX="20.0" layoutY="20.0" text="0" />
+                </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+    </children>
 </AnchorPane>

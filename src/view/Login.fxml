@@ -33,16 +33,12 @@
                   <Image url="@../logo.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="23.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM MANAGEMNT EVENT ORGANISATION" wrappingWidth="288.20458984375">
+            <Text fill="WHITE" layoutX="23.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM MANAGEMNT EVENT ORGANIZATION" wrappingWidth="288.20458984375">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-              <Button layoutX="119.0" layoutY="250.0" onAction="#goToRegister" prefHeight="33.0" prefWidth="91.0" style="-fx-background-color: #696969;" text="Register">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Button>
+              <Button layoutX="119.0" layoutY="250.0" onAction="#goToRegister" prefHeight="33.0" prefWidth="91.0" style="-fx-background-color: #696969;" text="Register"/>
          </children>
       </Pane>
         <Button layoutX="501.0" layoutY="273.0" onAction="#handleLogin" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: grey; -fx-border-radius: 1000;" text="Login" />

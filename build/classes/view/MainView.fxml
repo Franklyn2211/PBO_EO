@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
-   <children>
-       <!-- Sidebar -->
-       <Pane prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #696969;">
-           <children>
-               <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="0.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                   <image>
-                       <Image url="@../_Black%20And%20Yellow%20Modern%20Event%20Producer%20Initial%20Logo.png" />
-                   </image>
-               </ImageView>
-               <Button fx:id="btnDashboard" layoutX="11.0" layoutY="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Dashboard" />
-               <Button fx:id="btnAddClient" layoutX="11.0" layoutY="200.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Client" />
-               <Button fx:id="btnEvent" layoutX="11.0" layoutY="250.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Event" />
-               <Button fx:id="btnSchedule" layoutX="11.0" layoutY="300.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Schedule" />
-               <Button fx:id="btnLogout" layoutX="11.0" layoutY="550.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" text="Log Out" />
-           </children>
-       </Pane>
+    <children>
+        <!-- Sidebar -->
+        <Pane prefHeight="600.0" prefWidth="149.0" style="-fx-background-color: #696969;">
+            <children>
+                <ImageView fitHeight="168.0" fitWidth="181.0" layoutX="-8.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../logo.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="btnAddClient2" layoutX="11.0" layoutY="156.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Dashboard" />
+                <Button fx:id="btnAddClient" layoutX="11.0" layoutY="205.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Client" />
+                <Button fx:id="btnAddClient1" layoutX="11.0" layoutY="257.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Event" />
+                <Button fx:id="btnSchedule" layoutX="11.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="Schedule" />
+                <Button fx:id="btnSchedule1" layoutX="14.0" layoutY="549.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" text="Log Out" />
+            </children>
+        </Pane>
 
-       <!-- Header -->
-       <Label font="$x-large" layoutX="160.0" layoutY="20.0" text="Dashboard" />
-       <TextField fx:id="searchField" layoutX="214.0" layoutY="20.0" prefHeight="35.0" prefWidth="458.0" promptText="Cari Data..." />
-       <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="170.0" layoutY="20.0" pickOnBounds="true">
-           <image>
-               <Image url="@/assets/search.png" />
-           </image>
-       </ImageView>
+        <!-- Dashboard Title -->
+        <Text layoutX="163.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="138.2900390625">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Text>
 
-       <!-- Tiled Data Cards -->
-       <TitledPane animated="false" layoutX="200.0" layoutY="100.0" text="Total User">
-           <content>
-               <Label fx:id="totalUserLabel" text="0" />
-           </content>
-       </TitledPane>
-       <TitledPane animated="false" layoutX="400.0" layoutY="100.0" text="Total Client">
-           <content>
-               <Label fx:id="totalClientLabel" text="0" />
-           </content>
-       </TitledPane>
-       <TitledPane animated="false" layoutX="600.0" layoutY="100.0" text="Total Events">
-           <content>
-               <Label fx:id="totalEventLabel" text="0" />
-           </content>
-       </TitledPane>
+        <!-- Total Event TitledPane -->
+        <TitledPane animated="false" layoutX="588.0" layoutY="109.0" text="Total Event">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="152.0">
+                    <children>
+                    <Label fx:id="totalEventLabel" layoutX="20.0" layoutY="20.0" text="0" />
+                </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
 
-       <!-- Pie Chart -->
-       <PieChart fx:id="statusPieChart" layoutX="200.0" layoutY="250.0" prefHeight="300.0" prefWidth="400.0" title="Persentase Status Events" />
+        <!-- PieChart -->
+        <PieChart fx:id="eventStatusChart" layoutX="262.0" layoutY="304.0" prefHeight="228.0" prefWidth="403.0" title="Persentase Events Selesai dan Belum Selesai" />
 
-       <!-- Table View -->
-       <TableView fx:id="tableView" layoutX="650.0" layoutY="250.0" prefHeight="300.0" prefWidth="130.0">
-           <columns>
-               <TableColumn fx:id="nameColumn" prefWidth="130.0" text="Nama" />
-           </columns>
-       </TableView>
-   </children>
+                    <!-- Total Client TitledPane -->
+        <TitledPane animated="false" layoutX="386.0" layoutY="109.0" text="Total Client">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="153.0" >
+                <children>
+                    <Label fx:id="totalClientLabel" layoutX="20.0" layoutY="20.0" text="0" />
+                </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+    </children>
 </AnchorPane>
