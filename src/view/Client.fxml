@@ -20,7 +20,7 @@
                 </ImageView>
 
                 <!-- Sidebar Buttons -->
-                <Button fx:id="goToDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
+                <Button fx:id="goToDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" onAction="#goToDashboard"  prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
                 <Button fx:id="goToClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" onAction="#goToClient" prefHeight="35.0" prefWidth="120.0" text="Client" />
                 <Button fx:id="goToEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
                 <Button fx:id="goToSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />

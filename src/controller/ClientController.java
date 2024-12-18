@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import util.DatabaseConnection;
 import model.Client;
 import javafx.collections.FXCollections;
@@ -11,9 +12,19 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class ClientController implements Initializable {
 
+    @FXML
+    private Button goToDashboard;
+    
+    @FXML
+    private Button goToClient;
+    
     @FXML
     private Button btnAddClientTop;
 
@@ -261,5 +272,47 @@ public class ClientController implements Initializable {
         } catch (SQLException e) {
             showAlert("Error Koneksi", e.getMessage());
         }
+    }
+    
+    public void goToClient() {
+        try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Client.fxml"));
+            Parent clientView = loader.load();
+            
+            // Get the current stage
+            Stage stage = (Stage) goToClient.getScene().getWindow();
+            
+            // Create a new scene with the client view
+            Scene scene = new Scene(clientView);
+            
+            // Set the new scene
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading Client view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void goToDashboard() {
+             try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
+            Parent clientView = loader.load();
+            
+            // Get the current stage
+            Stage stage = (Stage) goToDashboard.getScene().getWindow();
+            
+            // Create a new scene with the client view
+            Scene scene = new Scene(clientView);
+            
+            // Set the new scene
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading Dashboard view: " + e.getMessage());
+            e.printStackTrace();
+        }   
     }
 }

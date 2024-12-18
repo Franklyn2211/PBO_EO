@@ -24,7 +24,9 @@ import javafx.stage.Stage;
 
 public class MainController {
 
-    
+@FXML
+private Button goToDashboard;
+
 @FXML
 private Button goToClient;
 
@@ -109,7 +111,7 @@ private Label totalEventLabel;
     
     public void goToClient() {
         try {
-            // Load the Client.fxml
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Client.fxml"));
             Parent clientView = loader.load();
             
@@ -126,5 +128,26 @@ private Label totalEventLabel;
             System.out.println("Error loading Client view: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    public void goToDashboard() {
+             try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
+            Parent clientView = loader.load();
+            
+            // Get the current stage
+            Stage stage = (Stage) goToDashboard.getScene().getWindow();
+            
+            // Create a new scene with the client view
+            Scene scene = new Scene(clientView);
+            
+            // Set the new scene
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading Dashboard view: " + e.getMessage());
+            e.printStackTrace();
+        }   
     }
 }
