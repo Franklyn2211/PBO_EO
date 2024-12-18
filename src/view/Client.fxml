@@ -20,11 +20,10 @@
                 </ImageView>
 
                 <!-- Sidebar Buttons -->
-                <Button fx:id="btnDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
-                <Button fx:id="btnClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Client" />
-                <Button fx:id="btnEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
-                <Button fx:id="btnSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />
-                <Button fx:id="btnLogout" layoutX="15.0" layoutY="520.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Log Out" />
+                <Button fx:id="goToDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
+                <Button fx:id="goToClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" onAction="#goToClient" prefHeight="35.0" prefWidth="120.0" text="Client" />
+                <Button fx:id="goToEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
+                <Button fx:id="goToSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />
             </children>
         </Pane>
 
@@ -58,6 +57,8 @@
                 <TextField fx:id="addressField" layoutX="20.0" layoutY="150.0" prefWidth="360.0" promptText="Alamat" />
                 <Button fx:id="btnSaveClient" layoutX="140.0" layoutY="250.0" mnemonicParsing="false" text="Simpan" />
                 <Button fx:id="btnCancelClient" layoutX="220.0" layoutY="250.0" mnemonicParsing="false" text="Batal" />
+                <Button fx:id="btnUpdateClient" layoutX="100.0" layoutY="250.0" mnemonicParsing="false" text="Update" visible="false"/>
+                <Button fx:id="btnDeleteClient" layoutX="160.0" layoutY="250.0" mnemonicParsing="false" text="Delete" visible="false"/>
             </children>
         </AnchorPane>
     </children>

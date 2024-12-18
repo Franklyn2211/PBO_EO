@@ -1,43 +1,67 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-public class Client {
-    private String name;
-    private String contact;
-    private String address;
+import javafx.beans.property.*;
 
-    // Constructor
+public class Client {
+    private IntegerProperty number;
+    private StringProperty name;
+    private StringProperty contact;
+    private StringProperty address;
+
     public Client(String name, String contact, String address) {
-        this.name = name;
-        this.contact = contact;
-        this.address = address;
+        this.number = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty(name);
+        this.contact = new SimpleStringProperty(contact);
+        this.address = new SimpleStringProperty(address);
     }
 
-    // Getter dan Setter
-    public String getName() {
+    // Getter untuk Property
+    public IntegerProperty numberProperty() {
+        return number;
+    }
+
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContact() {
+    public StringProperty contactProperty() {
         return contact;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public String getAddress() {
+    public StringProperty addressProperty() {
         return address;
     }
 
+    // Getter dan Setter biasa
+    public int getNumber() {
+        return number.get();
+    }
+
+    public void setNumber(int number) {
+        this.number.set(number);
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public String getContact() {
+        return contact.get();
+    }
+
+    public void setContact(String contact) {
+        this.contact.set(contact);
+    }
+
+    public String getAddress() {
+        return address.get();
+    }
+
     public void setAddress(String address) {
-        this.address = address;
+        this.address.set(address);
     }
 }

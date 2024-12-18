@@ -1,123 +1,265 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import util.DatabaseConnection;
+import model.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.TextField;
-import model.Client; // Import class Client
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
 
-/**
- * FXML Controller class
- *
- * @author ASUS
- */
 public class ClientController implements Initializable {
 
     @FXML
-    private Button btnAddClientTop; // Tombol Tambah Client di atas tabel
+    private Button btnAddClientTop;
 
     @FXML
-    private AnchorPane addClientPopup; // Popup Form Tambah Client
+    private AnchorPane addClientPopup;
 
     @FXML
-    private Button btnSaveClient; // Tombol Simpan pada Popup Form
+    private Button btnSaveClient;
 
     @FXML
-    private Button btnCancelClient; // Tombol Batal pada Popup Form
+    private Button btnUpdateClient;
 
     @FXML
-    private TextField nameField; // Input Nama Client
+    private Button btnCancelClient;
 
     @FXML
-    private TextField contactField; // Input Kontak Client
+    private Button btnDeleteClient;
 
     @FXML
-    private TextField addressField; // Input Alamat Client
+    private TextField nameField;
 
     @FXML
-    private TableView<Client> clientTable; // Tabel akan menyimpan data Client
+    private TextField contactField;
 
     @FXML
-    private TableColumn<Client, String> nameColumn; // Kolom Nama
+    private TextField addressField;
 
     @FXML
-    private TableColumn<Client, String> contactColumn; // Kolom Kontak
+    private TableView<Client> clientTable;
 
     @FXML
-    private TableColumn<Client, String> addressColumn; // Kolom Alamat
+    private TableColumn<Client, Integer> numberColumn;
 
-    // Daftar data untuk ditampilkan dalam tabel
+    @FXML
+    private TableColumn<Client, String> nameColumn;
+
+    @FXML
+    private TableColumn<Client, String> contactColumn;
+
+    @FXML
+    private TableColumn<Client, String> addressColumn;
+
     private ObservableList<Client> clientData = FXCollections.observableArrayList();
-
-    @FXML
-    private void initialize() {
-        // Set nilai untuk kolom di tabel
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-
-        // Hubungkan data ke tabel
-        clientTable.setItems(clientData);
-
-        // Tombol Tambah Client (menampilkan form popup)
-        btnAddClientTop.setOnAction(event -> {
-            addClientPopup.setVisible(true);
-        });
-
-        // Tombol Batal: Tutup form popup
-        btnCancelClient.setOnAction(event -> {
-            addClientPopup.setVisible(false);
-        });
-
-        // Tombol Simpan: Simpan data ke dalam tabel dan tutup form
-        btnSaveClient.setOnAction(event -> {
-            // Ambil data dari field input
-            String nama = nameField.getText();
-            String kontak = contactField.getText();
-            String alamat = addressField.getText();
-
-            // Periksa apakah ada data yang kosong
-            if (!nama.isEmpty() && !kontak.isEmpty() && !alamat.isEmpty()) {
-                // Tambahkan data client ke ObservableList
-                Client newClient = new Client(nama, kontak, alamat);
-                clientData.add(newClient);
-
-                // Tampilkan log di console (opsional)
-                System.out.println("Data Client Ditambahkan:");
-                System.out.println("Nama: " + nama);
-                System.out.println("Kontak: " + kontak);
-                System.out.println("Alamat: " + alamat);
-
-                // Reset field
-                nameField.clear();
-                contactField.clear();
-                addressField.clear();
-
-                // Tutup form popup
-                addClientPopup.setVisible(false);
-            } else {
-                System.out.println("Harap isi semua field sebelum menyimpan!");
-            }
-        });
-    }
+    private Connection connection;
+    private Client selectedClient;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            connection = DatabaseConnection.getDBConnection();
+        } catch (SQLException e) {
+            showAlert("Koneksi Database Error", e.getMessage());
+            return;
+        }
+
+        // Konfigurasi kolom tabel
+        numberColumn.setCellValueFactory(cellData -> cellData.getValue().numberProperty().asObject());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        contactColumn.setCellValueFactory(cellData -> cellData.getValue().contactProperty());
+        addressColumn.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
+
+        clientTable.setItems(clientData);
+
+        // Tambah event listener untuk seleksi baris
+        clientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedClient = newSelection;
+                populateClientFields(newSelection);
+                btnSaveClient.setVisible(false);
+                btnUpdateClient.setVisible(true);
+                btnDeleteClient.setVisible(true);
+                addClientPopup.setVisible(true);
+            }
+        });
+
+        setupButtons();
+        loadClientsFromDatabase();
+    }
+
+    private void setupButtons() {
+        // Tombol Tambah Client
+        btnAddClientTop.setOnAction(event -> {
+            clearFields();
+            btnSaveClient.setVisible(true);
+            btnUpdateClient.setVisible(false);
+            btnDeleteClient.setVisible(false);
+            addClientPopup.setVisible(true);
+        });
+
+        // Tombol Simpan
+        btnSaveClient.setOnAction(event -> saveClient());
+
+        // Tombol Update
+        btnUpdateClient.setOnAction(event -> updateClient());
+
+        // Tombol Delete
+        btnDeleteClient.setOnAction(event -> deleteClient());
+
+        // Tombol Batal
+        btnCancelClient.setOnAction(event -> {
+            addClientPopup.setVisible(false);
+            clearFields();
+        });
+    }
+
+    private void saveClient() {
+        String nama = nameField.getText().trim();
+        String kontak = contactField.getText().trim();
+        String alamat = addressField.getText().trim();
+
+        if (nama.isEmpty() || kontak.isEmpty() || alamat.isEmpty()) {
+            showAlert("Validasi", "Harap isi semua field!");
+            return;
+        }
+
+        try {
+            String query = "INSERT INTO clients (name, contact, address) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, nama);
+            statement.setString(2, kontak);
+            statement.setString(3, alamat);
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int id = generatedKeys.getInt(1);
+                    Client newClient = new Client(nama, kontak, alamat);
+                    newClient.setNumber(id);
+                    clientData.add(newClient);
+                }
+                clearFields();
+                addClientPopup.setVisible(false);
+            }
+        } catch (SQLException e) {
+            showAlert("Error Menyimpan", e.getMessage());
+        }
+    }
+
+    private void updateClient() {
+        if (selectedClient == null) return;
+
+        String nama = nameField.getText().trim();
+        String kontak = contactField.getText().trim();
+        String alamat = addressField.getText().trim();
+
+        if (nama.isEmpty() || kontak.isEmpty() || alamat.isEmpty()) {
+            showAlert("Validasi", "Harap isi semua field!");
+            return;
+        }
+
+        try {
+            String query = "UPDATE clients SET name=?, contact=?, address=? WHERE id=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nama);
+            statement.setString(2, kontak);
+            statement.setString(3, alamat);
+            statement.setInt(4, selectedClient.getNumber());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                // Update data di ObservableList
+                int index = clientData.indexOf(selectedClient);
+                selectedClient.setName(nama);
+                selectedClient.setContact(kontak);
+                selectedClient.setAddress(alamat);
+                clientData.set(index, selectedClient);
+
+                clearFields();
+                addClientPopup.setVisible(false);
+            }
+        } catch (SQLException e) {
+            showAlert("Error Update", e.getMessage());
+        }
+    }
+
+    private void deleteClient() {
+        if (selectedClient == null) return;
+
+        try {
+            String query = "DELETE FROM clients WHERE id=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, selectedClient.getNumber());
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                clientData.remove(selectedClient);
+                clearFields();
+                addClientPopup.setVisible(false);
+            }
+        } catch (SQLException e) {
+            showAlert("Error Hapus", e.getMessage());
+        }
+    }
+
+    private void loadClientsFromDatabase() {
+        clientData.clear();
+        try {
+            String query = "SELECT * FROM clients ORDER BY id";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nama = resultSet.getString("name");
+                String kontak = resultSet.getString("contact");
+                String alamat = resultSet.getString("address");
+
+                Client client = new Client(nama, kontak, alamat);
+                client.setNumber(id);
+                clientData.add(client);
+            }
+        } catch (SQLException e) {
+            showAlert("Error Memuat Data", e.getMessage());
+        }
+    }
+
+    private void populateClientFields(Client client) {
+        nameField.setText(client.getName());
+        contactField.setText(client.getContact());
+        addressField.setText(client.getAddress());
+    }
+
+    private void clearFields() {
+        nameField.clear();
+        contactField.clear();
+        addressField.clear();
+        selectedClient = null;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // Pastikan untuk menutup koneksi saat controller ditutup
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            showAlert("Error Koneksi", e.getMessage());
+        }
     }
 }
-
-
-

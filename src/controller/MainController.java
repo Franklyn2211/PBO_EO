@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.chart.PieChart;
@@ -15,8 +16,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class MainController {
+
+    
+@FXML
+private Button goToClient;
 
 @FXML
 private Label totalClientLabel;
@@ -98,6 +108,23 @@ private Label totalEventLabel;
     }
     
     public void goToClient() {
-    
+        try {
+            // Load the Client.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Client.fxml"));
+            Parent clientView = loader.load();
+            
+            // Get the current stage
+            Stage stage = (Stage) goToClient.getScene().getWindow();
+            
+            // Create a new scene with the client view
+            Scene scene = new Scene(clientView);
+            
+            // Set the new scene
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading Client view: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

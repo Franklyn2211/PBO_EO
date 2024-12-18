@@ -58,6 +58,8 @@
                 <TextField fx:id="addressField" layoutX="20.0" layoutY="150.0" prefWidth="360.0" promptText="Alamat" />
                 <Button fx:id="btnSaveClient" layoutX="140.0" layoutY="250.0" mnemonicParsing="false" text="Simpan" />
                 <Button fx:id="btnCancelClient" layoutX="220.0" layoutY="250.0" mnemonicParsing="false" text="Batal" />
+                <Button fx:id="btnUpdateClient" layoutX="100.0" layoutY="250.0" mnemonicParsing="false" text="Update" visible="false"/>
+                <Button fx:id="btnDeleteClient" layoutX="160.0" layoutY="250.0" mnemonicParsing="false" text="Delete" visible="false"/>
             </children>
         </AnchorPane>
     </children>
