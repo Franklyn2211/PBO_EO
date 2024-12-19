@@ -42,9 +42,9 @@
             <columns>
                 <!-- Nomor Column -->
                 <TableColumn fx:id="numberColumn" prefWidth="48.0" text="No." />
-                <TableColumn fx:id="nameColumn" prefWidth="164.0" text="Nama" />
+                <TableColumn fx:id="nameColumn" prefWidth="170.0" text="Nama" />
                 <TableColumn fx:id="contactColumn" prefWidth="166.0" text="Kontak" />
-                <TableColumn fx:id="addressColumn" prefWidth="135.0" text="Alamat" />
+                <TableColumn fx:id="addressColumn" prefWidth="172.0" text="Alamat" />
             </columns>
         </TableView>
 

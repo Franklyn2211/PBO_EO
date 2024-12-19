@@ -188,7 +188,7 @@ public class ClientController implements Initializable {
             statement.setString(1, nama);
             statement.setString(2, kontak);
             statement.setString(3, alamat);
-            statement.setInt(4, selectedClient.getNumber());
+            statement.setInt(4, selectedClient.getId());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -213,7 +213,7 @@ public class ClientController implements Initializable {
         try {
             String query = "DELETE FROM clients WHERE id=?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, selectedClient.getNumber());
+            statement.setInt(1, selectedClient.getId());
 
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
@@ -232,7 +232,8 @@ public class ClientController implements Initializable {
             String query = "SELECT * FROM clients ORDER BY id";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-
+            
+            int rowNum = 1;
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String nama = resultSet.getString("name");
@@ -240,7 +241,8 @@ public class ClientController implements Initializable {
                 String alamat = resultSet.getString("address");
 
                 Client client = new Client(nama, kontak, alamat);
-                client.setNumber(id);
+                client.setId(id);
+                client.setNumber(rowNum++);
                 clientData.add(client);
             }
         } catch (SQLException e) {

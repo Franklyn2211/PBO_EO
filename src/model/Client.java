@@ -4,12 +4,14 @@ import javafx.beans.property.*;
 
 public class Client {
     private IntegerProperty number;
+    private IntegerProperty id;
     private StringProperty name;
     private StringProperty contact;
     private StringProperty address;
 
     public Client(String name, String contact, String address) {
         this.number = new SimpleIntegerProperty();
+        this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty(name);
         this.contact = new SimpleStringProperty(contact);
         this.address = new SimpleStringProperty(address);
@@ -18,6 +20,10 @@ public class Client {
     // Getter untuk Property
     public IntegerProperty numberProperty() {
         return number;
+    }
+    
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public StringProperty nameProperty() {
@@ -39,6 +45,14 @@ public class Client {
 
     public void setNumber(int number) {
         this.number.set(number);
+    }
+    
+     public int getId() {
+        return id.get();
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public String getName() {
