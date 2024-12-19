@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
     <children>
         <!-- Sidebar -->
         <Pane prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #696969;">
             <children>
-                <!-- Logo -->
                 <ImageView fitHeight="190.0" fitWidth="208.0" layoutX="-20.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Logo.png" />
                     </image>
                 </ImageView>
-
-                <!-- Sidebar Buttons -->
-                <Button fx:id="goToDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" onAction="#goToDashboard"  prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
-                <Button fx:id="goToClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" onAction="#goToClient" prefHeight="35.0" prefWidth="120.0" text="Client" />
-                <Button fx:id="goToEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" onAction="#goToEvent"  prefHeight="35.0" prefWidth="120.0" text="Event" />
-                <Button fx:id="goToSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" onAction="#goToSchedule"  prefHeight="35.0" prefWidth="120.0" text="Schedule" />
+                <Button fx:id="btnDashboard" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Dashboard" />
+                <Button fx:id="btnClient" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Client" />
+                <Button fx:id="btnEvent" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Event" />
+                <Button fx:id="btnSchedule" layoutX="15.0" layoutY="307.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Schedule" />
+                <Button fx:id="btnLogout" layoutX="15.0" layoutY="520.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Log Out" />
             </children>
         </Pane>
 
         <!-- Main Content -->
         <AnchorPane layoutX="150.0" layoutY="0.0" prefHeight="600.0" prefWidth="650.0">
             <children>
-                <!-- Header -->
                 <Label layoutX="20.0" layoutY="20.0" prefHeight="56.0" prefWidth="197.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Event Management">
-               <font>
-                  <Font size="32.0" />
-               </font></Label>
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                </Label>
 
-                <!-- Add Client Button -->
-                <Button fx:id="btnAddEventTop" layoutX="678.0" layoutY="58.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Events" />
+                <Button fx:id="btnAddEvent" layoutX="678.0" layoutY="58.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Tambah Event" onAction="#showAddEventPopup" />
 
-                <!-- Events Table -->
                 <TableView fx:id="clientTable" layoutX="20.0" layoutY="108.0" prefHeight="442.0" prefWidth="851.0">
                     <columns>
                         <TableColumn fx:id="numberColumn" prefWidth="48.0" text="No." />
@@ -48,18 +43,37 @@
                         <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Tanggal" />
                         <TableColumn fx:id="locationColumn" prefWidth="150.0" text="Lokasi" />
                         <TableColumn fx:id="clientNameColumn" prefWidth="150.0" text="Nama Client" />
+                        <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Aksi" />
                     </columns>
                 </TableView>
 
-                <!-- Add Client Popup -->
-                <AnchorPane fx:id="addClientPopup" layoutX="125.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                <!-- Add Event Popup -->
+                <AnchorPane fx:id="addEventPopup" layoutX="125.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
                     <children>
-                        <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tambah Client" />
-                        <TextField fx:id="nameField" layoutX="20.0" layoutY="50.0" prefWidth="360.0" promptText="Nama Client" />
-                        <TextField fx:id="contactField" layoutX="20.0" layoutY="100.0" prefWidth="360.0" promptText="Kontak" />
-                        <TextField fx:id="addressField" layoutX="20.0" layoutY="150.0" prefWidth="360.0" promptText="Alamat" />
-                        <Button fx:id="btnSaveClient" layoutX="120.0" layoutY="300.0" text="Simpan" />
-                        <Button fx:id="btnCancelClient" layoutX="200.0" layoutY="300.0" text="Batal" />
+                        <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tambah Event" />
+                        <TextField fx:id="nameField" layoutX="20.0" layoutY="50.0" prefWidth="360.0" promptText="Nama Event" />
+                        <TextField fx:id="descriptionField" layoutX="20.0" layoutY="100.0" prefWidth="360.0" promptText="Deskripsi" />
+                        <ComboBox fx:id="categoryComboBox" layoutX="20.0" layoutY="150.0" prefWidth="360.0" />
+                        <DatePicker fx:id="eventDatePicker" layoutX="20.0" layoutY="200.0" prefWidth="360.0" />
+                        <TextField fx:id="locationField" layoutX="20.0" layoutY="250.0" prefWidth="360.0" promptText="Lokasi" />
+                        <ComboBox fx:id="clientComboBox" layoutX="20.0" layoutY="300.0" prefWidth="360.0" />
+                        <Button fx:id="btnSaveEvent" layoutX="120.0" layoutY="350.0" text="Simpan" onAction="#saveEvent" />
+                        <Button fx:id="btnCancelEvent" layoutX="200.0" layoutY="350.0" text="Batal" onAction="#cancelEvent" />
+                    </children>
+                </AnchorPane>
+
+                <!-- Update Event Popup -->
+                <AnchorPane fx:id="updateEventPopup" layoutX="125.0" layoutY="100.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                    <children>
+                        <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Update Event" />
+                        <TextField fx:id="updateNameField" layoutX="20.0" layoutY="50.0" prefWidth="360.0" promptText="Nama Event" />
+                        <TextField fx:id="updateDescriptionField" layoutX="20.0" layoutY="100.0" prefWidth="360.0" promptText="Deskripsi" />
+                        <ComboBox fx:id="updateCategoryComboBox" layoutX="20.0" layoutY="150.0" prefWidth="360.0" />
+                        <DatePicker fx:id="updateEventDatePicker" layoutX="20.0" layoutY="200.0" prefWidth="360.0" />
+                        <TextField fx:id="updateLocationField" layoutX="20.0" layoutY="250.0" prefWidth="360.0" promptText="Lokasi" />
+                        <ComboBox fx:id="updateClientComboBox" layoutX="20.0" layoutY="300.0" prefWidth="360.0" />
+                        <Button fx:id="btnUpdateEvent" layoutX="120.0" layoutY="350.0" text="Update" onAction="#updateEvent" />
+                        <Button fx:id="btnCancelUpdate" layoutX="200.0" layoutY="350.0" text="Batal" onAction="#cancelUpdate" />
                     </children>
                 </AnchorPane>
             </children>

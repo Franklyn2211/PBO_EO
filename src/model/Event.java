@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Event {
     private int id;
@@ -9,20 +9,11 @@ public class Event {
     private String category;
     private Date date;
     private String location;
-    private String clientName;
+    private int clientId;
+    private int createdBy;
+    private int updatedBy;
 
-    // Constructor
-    public Event(int id, String name, String description, String category, Date date, String location, String clientName) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.date = date;
-        this.location = location;
-        this.clientName = clientName;
-    }
-
-    // Getters and Setters
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -55,9 +46,11 @@ public class Event {
         this.category = category;
     }
 
-    public Date getDate() {
-        return date;
-    }
+// Event.java
+public Date getDate() {
+    return date; // This is already a java.util.Date object
+}
+
 
     public void setDate(Date date) {
         this.date = date;
@@ -71,11 +64,28 @@ public class Event {
         this.location = location;
     }
 
-    public String getClientName() {
-        return clientName;
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public int getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(int updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+    
 }
