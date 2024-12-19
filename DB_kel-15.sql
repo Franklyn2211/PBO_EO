@@ -50,6 +50,7 @@ CREATE TABLE schedules (
     event_id INT NOT NULL,
     status ENUM('Selesai', 'Belum Selesai') NOT NULL,
     decoration_date DATE,  -- Tanggal jadwal dekorasi
+    decoration_time TIME,  -- Jam jadwal dekorasi
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     created_by INT,

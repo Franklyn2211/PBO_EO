@@ -25,7 +25,7 @@
         </Pane>
 
         <!-- Dashboard Title -->
-        <Label layoutX="166.0" layoutY="20.0" prefHeight="56.0" prefWidth="400.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Dashboard">
+        <Label layoutX="163.0" layoutY="30.0" prefHeight="56.0" prefWidth="400.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Dashboard">
             <font>
                 <Font size="32.0" />
             </font>
@@ -34,7 +34,7 @@
         <!-- Total Event TitledPane -->
         <TitledPane animated="false" layoutX="388.0" layoutY="109.0" text="Total Event">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="152.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="152.0">
                     <children>
                     <Label fx:id="totalEventLabel" layoutX="20.0" layoutY="20.0" text="0" />
                 </children>
@@ -43,12 +43,12 @@
         </TitledPane>
 
         <!-- PieChart -->
-        <PieChart fx:id="eventStatusChart" layoutX="262.0" layoutY="304.0" prefHeight="228.0" prefWidth="403.0" title="Persentase Events Selesai dan Belum Selesai" />
+        <PieChart fx:id="eventStatusChart" layoutX="230.0" layoutY="260.0" prefHeight="282.0" prefWidth="471.0" title="Persentase Events Selesai dan Belum Selesai" />
 
                     <!-- Total Client TitledPane -->
-        <TitledPane animated="false" layoutX="163.0" layoutY="109.0" text="Total Client">
+        <TitledPane animated="false" layoutX="173.0" layoutY="109.0" prefHeight="110.0" prefWidth="155.0" text="Total Client">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="153.0" >
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="85.0" prefWidth="153.0">
                 <children>
                     <Label fx:id="totalClientLabel" layoutX="20.0" layoutY="20.0" text="0" />
                 </children>
