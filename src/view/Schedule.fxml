@@ -79,10 +79,9 @@
                                 <Button fx:id="btnUpdateSchedule" text="Update" visible="false" />
                                 <Button fx:id="btnDeleteSchedule" text="Delete" visible="false" />
                                 <Button fx:id="btnCancelSchedule" text="Batal" />
+                                <Button fx:id="btnSaveSchedule" text="Simpan" />
                             </children>
                         </HBox>
-
-                        <Button fx:id="btnSaveSchedule" layoutX="120.0" layoutY="300.0" text="Simpan" />
                     </children>
                 </AnchorPane>
             </children>

@@ -159,7 +159,7 @@ public class ClientController implements Initializable {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
                     Client newClient = new Client(nama, kontak, alamat);
-                    newClient.setNumber(id);
+                    newClient.setId(id);
                     clientData.add(newClient);
                 }
                 clearFields();
@@ -235,6 +235,7 @@ public class ClientController implements Initializable {
             
             int rowNum = 1;
             while (resultSet.next()) {
+                
                 int id = resultSet.getInt("id");
                 String nama = resultSet.getString("name");
                 String kontak = resultSet.getString("contact");
